@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap");
+
+body {
+  font-family: "Tenor Sans", sans-serif;
+  font-size: 100%;
+  font-size: 16px;
+  line-height: 1.5;
+  background: #3a3a3a;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 40px 0 40px 0;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+a:hover {
+  color: #94b2eb;
+  cursor: pointer;
+}
+
+h2 {
+  color: rgb(255, 255, 255);
+}
+
+.container {
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+section {
+  display: block;
+}
+
+.text-center {
+  text-align: center;
+  border-bottom: 1px solid;
+  border-top: 1px solid;
+}
+
+.site-container {
+  margin: 2rem auto;
+  max-width: calc(100% - 80px);
+}
+
+.movie-container {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(265px, 300px));
+  gap: 2rem;
+  margin-top: 50px;
+}
+
+.article-image {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.article-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 2px 2px 0 0;
+}
+
+.article-card {
+  background: rgb(34, 34, 34);
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+.article-card:hover {
+  box-shadow: 0 4px 20px 0 rgba(34, 68, 123, 0.2);
+  cursor: pointer;
+}
+
+.article-content {
+  padding: 2rem;
+}
+
+.article-content .card-category {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: #94b2eb;
+  display: block;
+  text-decoration: none;
+}
+
+.article-content .card-title {
+  margin: 1rem 0;
+  color: #94b2eb;
+}
+
+.article-content .card-excerpt {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #94b2eb;
+  margin: 0;
+}
+
+p {
+  color: #94b2eb;
+}
+
+h4 {
+  text-align: center;
+}

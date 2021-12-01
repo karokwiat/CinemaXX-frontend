@@ -11,12 +11,40 @@ export default () => {
       )
         .then((response) => response.json())
         .then((movies) => {
-          const moviesUl = document.querySelector("ul.movies");
-          let moviesHtml = "";
+          const movieContainer = document.querySelector(".movie-container");
+          const noMoviePrompt = document.querySelector("h4.prompt");
+          noMoviePrompt.style.display = "none";
+
           movies.forEach((movie) => {
-            moviesHtml += `<li>${movie.title} - <a href="/movie/${movie.movieId}" data-navigo>link to profile</a>`;
+            const movieArticle = document.createElement("article");
+            movieArticle.classList.add("article-card");
+            movieContainer.appendChild(movieArticle);
+            const imageFigure = document.createElement("figure");
+            imageFigure.classList.add("article-image");
+            movieArticle.appendChild(imageFigure);
+            const image = document.createElement("img");
+            imageFigure.appendChild(image);
+            image.src = movie.poster;
+            image.alt = `Picture of ${movie.title}`;
+            const articleContent = document.createElement("div");
+            articleContent.classList.add("article-content");
+            movieArticle.appendChild(articleContent);
+            const category = document.createElement("a");
+            articleContent.appendChild(category);
+            category.classList.add("card-category");
+            category.innerHTML = movie.ageRestriction;
+            const movieTitle = document.createElement("h3");
+            articleContent.appendChild(movieTitle);
+            const movieTitleLink = document.createElement("a");
+            movieTitle.appendChild(movieTitleLink);
+            movieTitleLink.href = `/#/movie/${movie.movieId}`;
+            movieTitleLink.innerHTML = movie.title;
+            movie.timeSlots.forEach((timesSlot) => {
+              const scheduledTime = document.createElement("p");
+              articleContent.appendChild(scheduledTime);
+              scheduledTime.innerHTML = timesSlot.scheduledTime;
+            });
           });
-          moviesUl.innerHTML = moviesHtml;
         });
     });
 };
