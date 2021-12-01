@@ -30,6 +30,8 @@ a:hover {
 
 h2 {
   color: rgb(255, 255, 255);
+  font-size: 80px;
+  text-transform: uppercase;
 }
 
 .container {
@@ -45,8 +47,6 @@ section {
 
 .text-center {
   text-align: center;
-  border-bottom: 1px solid;
-  border-top: 1px solid;
 }
 
 .site-container {
@@ -117,4 +117,15 @@ p {
 
 h4 {
   text-align: center;
+}
+
+.more {
+  font: inherit;
+  color: white;
+  padding: 0;
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
 }

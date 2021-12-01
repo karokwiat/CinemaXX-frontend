@@ -39,11 +39,20 @@ export default () => {
             movieTitle.appendChild(movieTitleLink);
             movieTitleLink.href = `/#/movie/${movie.movieId}`;
             movieTitleLink.innerHTML = movie.title;
-            movie.timeSlots.forEach((timesSlot) => {
-              const scheduledTime = document.createElement("p");
-              articleContent.appendChild(scheduledTime);
-              scheduledTime.innerHTML = timesSlot.scheduledTime;
-            });
+            movie.timeSlots
+              .filter((timesSlot, idx) => idx < 2)
+              .forEach((timesSlot) => {
+                const scheduledTime = document.createElement("p");
+                articleContent.appendChild(scheduledTime);
+                scheduledTime.innerHTML = timesSlot.scheduledTime;
+              });
+            if (movie.timeSlots.length > 2) {
+              const showMore = document.createElement("a");
+              articleContent.appendChild(showMore);
+              showMore.innerText = "Show more times";
+              showMore.classList.add("more");
+              showMore.href = `/#/movie/${movie.movieId}`;
+            }
           });
         });
     });

@@ -9,7 +9,7 @@ export default (movieId) => {
       return fetch(`http://localhost:8080/api/movie/${movieId}`)
         .then((response) => response.json())
         .then((movie) => {
-          document.querySelector("h2").innerText = movie.title;
+          document.querySelector("h3").innerText = movie.title;
           document.querySelector("li.ageRestriction").innerHTML =
             movie.ageRestriction;
           document.querySelector("li.rating").innerHTML = movie.rating;
