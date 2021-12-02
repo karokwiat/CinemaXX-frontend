@@ -6,7 +6,7 @@ export default (movieId) => {
     .then((movieHtml) => {
       content.innerHTML = movieHtml;
 
-      return fetch(`http://localhost:8080/api/movie/${movieId}`)
+      return fetch(`${window.apiUrl}/api/movie/${movieId}`)
         .then((response) => response.json())
         .then((movie) => {
           document.querySelector("h3").innerText = movie.title;
