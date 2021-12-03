@@ -49,6 +49,30 @@ section {
   text-align: center;
 }
 
+.filter {
+  display: flex;
+  justify-content: center;
+}
+
+.date-filter-btn {
+  font: inherit;
+  background-color: #4e7bcf;
+  color: white;
+  padding: 16px;
+  margin: 5px;
+  font-size: 16px;
+  border: none;
+}
+
+.date-filter {
+  position: relative;
+  display: inline-block;
+}
+
+.date-filter:hover .date-filter-btn {
+  cursor: pointer;
+}
+
 .site-container {
   margin: 2rem auto;
   max-width: calc(100% - 80px);
