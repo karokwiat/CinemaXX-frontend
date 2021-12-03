@@ -6,8 +6,49 @@ export default () => {
     .then((moviesHtml) => {
       content.innerHTML = moviesHtml;
 
+      const today = new Date();
+      const tomorrow = setNextDay(today);
+
+      function setNextDay(day) {
+        const nextDay = new Date(day);
+        nextDay.setDate(nextDay.getDate() + 1);
+        nextDay.setHours(24, 0, 0, 0);
+        return nextDay;
+      }
+
+      function formatDateForRequest(date) {
+        let d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
+
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
+
+        return [year, month, day].join("-");
+      }
+
+      function getMovieScheduledTime(date) {
+        let d = new Date(date),
+          hours = "" + d.getHours(),
+          minutes = "" + d.getMinutes();
+
+        if (minutes.length < 2) minutes = "0" + minutes;
+
+        return [hours, minutes].join(":");
+      }
+
+      function checkIfDateIsInside(check, from, to) {
+        return (
+          check.getTime() <= to.getTime() && check.getTime() >= from.getTime()
+        );
+      }
+
+      const startDate = formatDateForRequest(today);
+      const endDate = formatDateForRequest(tomorrow);
+
       return fetch(
-        `${window.apiUrl}/api/movie?startRange=2021-10-01&endRange=2021-12-31`
+        `${window.apiUrl}/api/movie?startRange=${startDate}&endRange=${startDate}`
       )
         .then((response) => response.json())
         .then((movies) => {
@@ -15,7 +56,18 @@ export default () => {
           const noMoviePrompt = document.querySelector("h4.prompt");
           noMoviePrompt.style.display = "none";
 
-          movies.forEach((movie) => {
+          const filteredMovies = movies.filter((movie) => {
+            const filteredTimesSlots = movie.timeSlots.filter((timesSlot) => {
+              const check = formatDatetimeToJavascriptDate(
+                timesSlot.scheduledTime
+              );
+              const checkResult = checkIfDateIsInside(check, today, tomorrow);
+              return checkResult;
+            });
+            return filteredTimesSlots.length > 0;
+          });
+
+          filteredMovies.forEach((movie) => {
             const movieArticle = document.createElement("article");
             movieArticle.classList.add("article-card");
             movieContainer.appendChild(movieArticle);
@@ -44,7 +96,9 @@ export default () => {
               .forEach((timesSlot) => {
                 const scheduledTime = document.createElement("p");
                 articleContent.appendChild(scheduledTime);
-                scheduledTime.innerHTML = timesSlot.scheduledTime;
+                scheduledTime.innerHTML = getMovieScheduledTime(
+                  formatDatetimeToJavascriptDate(timesSlot.scheduledTime)
+                );
               });
             if (movie.timeSlots.length > 2) {
               const showMore = document.createElement("a");
@@ -56,4 +110,10 @@ export default () => {
           });
         });
     });
+
+  function formatDatetimeToJavascriptDate(datetime) {
+    const t = datetime.split(/[- :T]/);
+    const d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
+    return d;
+  }
 };
