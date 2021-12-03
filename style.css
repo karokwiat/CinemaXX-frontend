@@ -49,6 +49,11 @@ section {
   text-align: center;
 }
 
+.filter {
+  display: flex;
+  justify-content: center;
+}
+
 .date-filter-btn {
   font: inherit;
   background-color: #4e7bcf;
