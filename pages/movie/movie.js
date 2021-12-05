@@ -9,10 +9,9 @@ export default (movieId) => {
       return fetch(`${window.apiUrl}/api/movie/${movieId}`)
         .then((response) => response.json())
         .then((movie) => {
-          document.querySelector("h3").innerText = movie.title;
-          document.querySelector("li.ageRestriction").innerHTML =
-            movie.ageRestriction;
-          document.querySelector("li.rating").innerHTML = movie.rating;
+          document.querySelector("h3.title").innerText = movie.title;
+          document.querySelector("p.description").innerHTML = movie.description;
+          document.querySelector("img").innerHTML = movie.poster;
         });
     });
 };
