@@ -11,6 +11,41 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 30px 10%;
+}
+
+.logo {
+  cursor: pointer;
+  margin-right: auto;
+  font-weight: 100;
+  font-size: 30px;
+}
+
+.nav-links {
+  list-style: none;
+}
+
+.nav-links li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.nav-links li a {
+  transition: all 0.3s easy 0s;
+}
+
+.nav-links li a:hover {
+  color: #4e7bcf;
+}
+
+.login {
+  margin-left: 20px;
+}
+
 h1 {
   display: flex;
   justify-content: center;
