@@ -11,7 +11,8 @@ export default () => {
         // Make sure the form is not submitted
         event.preventDefault();
         // endpoint for logging in
-        const apiUrl = "http://54.175.181.176:9090/api/authenticate/login";
+
+        const apiUrl = `${window.apiUrl}/api/authenticate/login`;
 
         fetch(apiUrl, {
           method: "POST",
@@ -23,7 +24,7 @@ export default () => {
             password: document.querySelector(".password").value,
           }),
         })
-          .then((response) => response.json())
+          .then((Response) => Response.json())
           .then((response) => {
             if (response.token) {
               // Saving the JWT to local storage
