@@ -40,7 +40,13 @@ export default async (movieId) => {
     const url = new URL(`${window.apiUrl}/api/bookings`);
     url.searchParams.append("theaterHallId", 1);
     url.searchParams.append("startTime", event.target.value);
-    const getSeatsResponse = await fetch(url);
+    const getSeatsResponse = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage
+          .getItem("user")
+          .replace('\\"', "")}`,
+      },
+    });
 
     const { freeSeats, bookedSeats } = await getSeatsResponse.json();
 
