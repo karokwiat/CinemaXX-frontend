@@ -26,11 +26,6 @@ export default (movieId) => {
             timeSlotItem.textContent = getTimeForCustomer(
               timeSlot.scheduledTime
             );
-
-            // Hard coded because we don't have this functionality yet.
-            const theaterHallId = 1;
-            timeSlotItem.href = `#/book/${theaterHallId}/${timeSlot.scheduledTime}`;
-
             timeSlotsList.appendChild(timeSlotItem);
           });
         });
