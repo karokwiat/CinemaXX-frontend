@@ -103,6 +103,9 @@ export default () => {
           const imageFigure = document.createElement("figure");
           imageFigure.classList.add("article-image");
           movieArticle.appendChild(imageFigure);
+          imageFigure.addEventListener("click", () =>
+            window.location.replace(`/#/movie/${movie.movieId}`)
+          );
           const image = document.createElement("img");
           imageFigure.appendChild(image);
           image.src = movie.poster;
