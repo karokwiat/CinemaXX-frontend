@@ -19,15 +19,19 @@ export default (movieId) => {
           document.querySelector("span").innerHTML = getTimeForCustomer(
             movie.timeSlots[0].scheduledTime
           );
+          const timeSlotsList = document.querySelector(".dropdown-content");
           movie.timeSlots.forEach((timeSlot) => {
-            const timeSlotsList = document.querySelector(".dropdown-content");
-            const timeSlotElement = document.createElement("p");
-            timeSlotsList.appendChild(timeSlotElement);
-            timeSlotElement.innerHTML = getTimeForCustomer(
+            const timeSlotItem = document.createElement("a");
+
+            timeSlotItem.textContent = getTimeForCustomer(
               timeSlot.scheduledTime
             );
-            const timeSlotLink = document.createElement("a");
-            timeSlotElement.appendChild(timeSlotLink);
+
+            // Hard coded because we don't have this functionality yet.
+            const theaterHallId = 1;
+            timeSlotItem.href = `#/book/${theaterHallId}/${timeSlot.scheduledTime}`;
+
+            timeSlotsList.appendChild(timeSlotsItem);
           });
         });
     });
