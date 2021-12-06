@@ -37,12 +37,10 @@ export default async (movieId) => {
   async function handleTimeSlotChange(event) {
     document.querySelector("div.movie-booking > div.seats");
 
-    const getSeatsResponse = await fetch(`${window.apiUrl}/api/bookings`, {
-      body: JSON.stringify({
-        theaterHallId: 1,
-        startTime: event.target.value,
-      }),
-    });
+    const url = new URL(`${window.apiUrl}/api/bookings`);
+    url.searchParams.append("theaterHallId", 1);
+    url.searchParams.append("startTime", event.target.value);
+    const getSeatsResponse = await fetch(url);
 
     const { freeSeats, bookedSeats } = await getSeatsResponse.json();
 
