@@ -46,6 +46,7 @@ export default async (movieId) => {
           .getItem("user")
           .replaceAll('"', "")}`,
       },
+      cors: "no-cors",
     });
 
     const { freeSeats, bookedSeats } = await getSeatsResponse.json();
