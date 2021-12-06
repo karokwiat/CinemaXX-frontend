@@ -1,12 +1,33 @@
 <header>
-  <h1>
-    <a href="/">Holbæk CinemaXX</a>
-  </h1>
+  <a class="logo" href="/">Holbæk CinemaXX</a>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/#/about" data-navigo>About</a></li>
+      <li><a href="/#/movies" data-navigo>Program</a></li>
+    </ul>
+  </nav>
+  <a class="login" href="/#/login" data-navigo>Login</a>
 </header>
 <main>
   <section class="movies container">
     <div class="text-center">
       <h2>What's on?</h2>
+    </div>
+    <div class="filter site-container">
+      <div class="date-filter">
+        <button class="date-filter-btn" id="today-btn">Today</button>
+      </div>
+      <div class="date-filter">
+        <button class="date-filter-btn" id="tomorrow-btn">Tomorrow</button>
+      </div>
+      <!-- <div class="date-filter">
+        <button class="date-filter-btn" id="aftertomorrow-btn">
+          Day after tomorrow
+        </button>
+      </div> -->
+      <div class="date-filter">
+        <button class="date-filter-btn" id="week-btn">This week</button>
+      </div>
     </div>
     <div class="movie-container">
       <h4 class="prompt">"We are sorry, there is no movie."</h4>
