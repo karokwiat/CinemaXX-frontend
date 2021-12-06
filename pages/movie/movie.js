@@ -18,8 +18,9 @@ export default async (movieId) => {
   );
   const timeSlotsList = document.querySelector(".dropdown-content");
   movie.timeSlots.forEach((timeSlot) => {
-    const timeSlotItem = document.createElement("a");
+    const timeSlotItem = document.createElement("option");
 
+    timeSlotItem.value = timeSlot.scheduledTime;
     timeSlotItem.textContent = getTimeForCustomer(timeSlot.scheduledTime);
     timeSlotsList.appendChild(timeSlotItem);
   });
