@@ -31,7 +31,7 @@ export default (movieId) => {
             const theaterHallId = 1;
             timeSlotItem.href = `#/book/${theaterHallId}/${timeSlot.scheduledTime}`;
 
-            timeSlotsList.appendChild(timeSlotsItem);
+            timeSlotsList.appendChild(timeSlotItem);
           });
         });
     });
