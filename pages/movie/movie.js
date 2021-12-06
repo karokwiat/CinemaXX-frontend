@@ -44,7 +44,7 @@ export default async (movieId) => {
       headers: {
         Authorization: `Bearer ${localStorage
           .getItem("user")
-          .replace('\\"', "")}`,
+          .replaceAll('"', "")}`,
       },
     });
 
