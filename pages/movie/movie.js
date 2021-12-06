@@ -34,5 +34,18 @@ export default async (movieId) => {
     return `${t[0]} ${h[0]}:${h[1]}`;
   }
 
-  function handleTimeSlotChange(event) {}
+  function handleTimeSlotChange(event) {
+    document.querySelector("div.movie-booking > div.seats");
+
+    const getSeatsResponse = await fetch(`${window.apiUrl}/api/bookings`, {
+      body: JSON.stringify({
+        theaterHallId: 1,
+        startTime: event.target.value,
+      }),
+    });
+
+    const { freeSeats, bookedSeats } = await getSeatsResponse.json();
+
+    console.log(freeSeats, "________", bookedSeats);
+  }
 };
