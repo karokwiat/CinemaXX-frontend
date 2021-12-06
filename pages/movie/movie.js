@@ -40,6 +40,7 @@ export default async (movieId) => {
     const url = new URL(`${window.apiUrl}/api/bookings`);
     url.searchParams.append("theaterHallId", 1);
     url.searchParams.append("startTime", event.target.value);
+
     const getSeatsResponse = await fetch(url, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
