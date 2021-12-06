@@ -42,11 +42,11 @@ export default async (movieId) => {
     url.searchParams.append("startTime", event.target.value);
     const getSeatsResponse = await fetch(url, {
       headers: {
+        "Content-type": "application/json; charset=UTF-8",
         Authorization: `Bearer ${localStorage
           .getItem("user")
           .replaceAll('"', "")}`,
       },
-      cors: "no-cors",
     });
 
     const { freeSeats, bookedSeats } = await getSeatsResponse.json();
