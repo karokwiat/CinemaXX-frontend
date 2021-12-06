@@ -22,6 +22,7 @@ export default () => {
             username: document.querySelector(".username").value,
             password: document.querySelector(".password").value,
           }),
+          mode: "no-cors",
         })
           .then((response) => response.json())
           .then((response) => {
