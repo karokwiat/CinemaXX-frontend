@@ -41,6 +41,10 @@
 }
 
 .seats-wrapper .screen {
+  height: 1rem;
+  background-color: black;
+  width: 50%;
+  box-shadow: 5rem 5rem 10rem 2.5rem white, -5rem 5rem 10rem 2.5rem white;
 }
 
 .seats-wrapper {
@@ -48,4 +52,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.seats-wrapper button {
+  width: 25%;
+  height: 2rem;
 }
