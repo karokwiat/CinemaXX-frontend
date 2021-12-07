@@ -63,7 +63,7 @@ export default async (movieId) => {
     highlightFreeSeats(seatsContent, freeSeats);
     highlightBookedSeats(seatsContent, bookedSeats);
 
-    addSelectSeatHandlers(seatsContent, freeSeats);
+    addSelectSeatHandler(seatsContent, freeSeats);
   }
 
   function addSelectSeatHandler(seatsContent, freeSeats) {
