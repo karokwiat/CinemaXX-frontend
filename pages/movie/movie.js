@@ -78,6 +78,8 @@ export default async (movieId) => {
         }
         return aArr[i] - bArr[i];
       }
+
+      return 0;
     });
   }
 };
