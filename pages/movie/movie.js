@@ -38,12 +38,11 @@ export default async (movieId) => {
     document.querySelector("div.movie-booking > div.seats");
 
     const url = new URL(`${window.apiUrl}/api/bookings`);
-    url.searchParams.append("theaterHallId", 1);
-    url.searchParams.append("startTime", event.target.value);
+    url.searchParams.append("theaterHall", 1);
+    url.searchParams.append("startTime", event.target.value.replace("T", ""));
 
     const getSeatsResponse = await fetch(url, {
       headers: {
-        "Content-type": "application/json; charset=UTF-8",
         Authorization: `Bearer ${localStorage.getItem("user")}`,
       },
     });
