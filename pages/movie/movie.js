@@ -69,17 +69,10 @@ export default async (movieId) => {
 
   function sortSeats(seats) {
     return seats.sort((a, b) => {
-      const aArr = a.split("-");
-      const bArr = a.split("-");
+      const aN = Number(a.replaceAll("-", ""));
+      const bN = Number(b.replaceAll("-", ""));
 
-      for (let i = 0, len = aArr.length; i < len; i++) {
-        if (aArr[i] === bArr[i] && i + 1 < len) {
-          continue;
-        }
-        return aArr[i] - bArr[i];
-      }
-
-      return 0;
+      return aN - bN;
     });
   }
 };
