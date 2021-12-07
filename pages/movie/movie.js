@@ -42,7 +42,7 @@ export default async (movieId) => {
       "div.movie-booking > div.seats-wrapper > div.seats-container"
     );
     const button = document.querySelector(".seats-wrapper button");
-    button.visibility = "visible";
+    button.style.visibility = "visible";
 
     const url = new URL(`${window.apiUrl}/api/bookings`);
     url.searchParams.append("theaterHall", 1);
@@ -75,7 +75,6 @@ export default async (movieId) => {
 
       button.disabled = true;
       button.removeAttribute("data-seat-number");
-      button.style.visibility = "hidden";
     };
 
     addSelectSeatHandler(seatsContent, button, clearSelected);
@@ -90,7 +89,6 @@ export default async (movieId) => {
 
         if (target.classList.contains("free")) {
           clearSelected(target.textContent);
-          button.style.visibility = "visible";
           button.disabled = false;
           button.setAttribute("data-seat-number", target.textContent);
           target.classList.remove("free");
