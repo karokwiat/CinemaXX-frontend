@@ -65,29 +65,33 @@ export default async (movieId) => {
   }
 
   function addSelectSeatHandler(seatsContent, freeSeats) {
-    const button = document.querySelector('.seats-wrapper button')
+    const button = document.querySelector(".seats-wrapper button");
+
     [...seatsContent].forEach((seat) => {
       seat.addEventListener("click", (event) => {
-        const { target }= event
-        if (target.classList.contains('free')) {
-          button.disabled = false
-          button.setAttribute('data-seat-number', target.textContent)
-          target.classList.remove('free')
-          target.classList.add('selected')
-          return
+        const { target } = event;
+        if (target.classList.contains("free")) {
+          button.disabled = false;
+          button.setAttribute("data-seat-number", target.textContent);
+          target.classList.remove("free");
+          target.classList.add("selected");
+          return;
         }
-        
-        const oldSeatNumber = button.getAttribute('data-seat-number')
+
+        const oldSeatNumber = button.getAttribute("data-seat-number");
 
         if (!oldSeatNumber) {
-          return
+          return;
         }
 
-        button.disabled = true
-        button.removeAttribute('data-seat-number')
+        button.disabled = true;
+        button.removeAttribute("data-seat-number");
 
-        const isFree = freeSeats.includes(oldSeatNumber)
-        [...seatsContent].filter((_seat) => _seat.textContent === oldSeatNumber).forEach((_seat) => isFree ? 'free' : 'booked')
+        const isFree = freeSeats.includes(oldSeatNumber);
+
+        [...seatsContent]
+          .filter((_seat) => _seat.textContent === oldSeatNumber)
+          .forEach((_seat) => (isFree ? "free" : "booked"));
       });
     });
   }
