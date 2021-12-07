@@ -24,10 +24,10 @@
   border-bottom: 0.5rem solid rgba(0, 0, 0, 0.75);
 }
 
-.seats-container .seat .seat-content .free {
+.seats-container .seat .seat-content.free {
   background-color: green;
 }
 
-.seats-container .seat .seat-content .booked {
+.seats-container .seat .seat-content.booked {
   background-color: red;
 }
