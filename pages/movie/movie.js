@@ -91,7 +91,7 @@ export default async (movieId) => {
 
         [...seatsContent]
           .filter((_seat) => _seat.textContent === oldSeatNumber)
-          .forEach((_seat) => (isFree ? "free" : "booked"));
+          .forEach((_seat) => _seat.classList.add(isFree ? "free" : "booked"));
       });
     });
   }
