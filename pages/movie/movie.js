@@ -77,8 +77,8 @@ export default async (movieId) => {
     });
   }
 
-  function highlightFreeSeats(seatsContainer, freeSeats) {
-    [...seatsContainer.children]
+  function highlightFreeSeats(seatsContent, freeSeats) {
+    [...seatsContent]
       .filter((seat) => freeSeats.includes(seat.textContent))
       .forEach((seat) => seat.classList.add("free"));
   }
