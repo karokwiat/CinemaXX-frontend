@@ -2,6 +2,7 @@ import renderMain from "./pages/main/main.js";
 import renderAbout from "./pages/about/about.js";
 import renderMovie from "./pages/movie/movie.js";
 import renderLogin from "./pages/login/login.js";
+import renderMovies from "./pages/movies/movies.js";
 import renderBooking from "./pages/booking/booking.js";
 
 export default function () {
