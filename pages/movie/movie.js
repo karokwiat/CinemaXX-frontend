@@ -56,8 +56,10 @@ export default async (movieId) => {
 
     clearSeats(seatsContainer);
     populateSeatsContainer(seatsContainer, freeSeats, bookedSeats);
-    highlightFreeSeats(seatsContainer, freeSeats);
-    highlightBookedSeats(seatsContainer, bookedSeats);
+
+    const seatsContent = seatsContainer.querySelectorAll('.seat-content')
+    highlightFreeSeats(seatsContent., freeSeats);
+    highlightBookedSeats(seatsContent, bookedSeats);
   }
 
   function populateSeatsContainer(seatsContainer, freeSeats, bookedSeats) {
@@ -81,9 +83,8 @@ export default async (movieId) => {
       .forEach((seat) => seat.classList.add("free"));
   }
 
-  function highlightBookedSeats(seatsContainer, bookedSeats) {
-    [...seatsContainer.children]
-      .filter((seat) => bookedSeats.includes(seat.textContent))
+  function highlightBookedSeats(seatsContent, bookedSeats) {
+    [...seatsContent].filter((seat) => bookedSeats.includes(seat.textContent))
       .forEach((seat) => seat.classList.add("booked"));
   }
 
