@@ -42,8 +42,6 @@ export default async (movieId) => {
       "div.movie-booking > div.seats-wrapper"
     );
 
-    seatsWrapper.style.visibility = "visible";
-
     const seatsContainer = document.querySelector(
       "div.movie-booking > div.seats-wrapper > div.seats-container"
     );
@@ -84,6 +82,8 @@ export default async (movieId) => {
     };
 
     addSelectSeatHandler(seatsContent, button, clearSelected);
+
+    seatsWrapper.style.visibility = "visible";
   }
 
   function handleContinue(event) {
