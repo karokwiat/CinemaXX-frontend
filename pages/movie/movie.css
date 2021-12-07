@@ -22,6 +22,7 @@
   align-items: center;
   border-radius: 0.5rem 0.5rem 2rem 2rem;
   border-top: none;
+  position: relative;
 }
 
 .seats-container .seat .seat-content::after {
