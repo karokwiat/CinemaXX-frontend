@@ -54,6 +54,7 @@
   align-items: center;
   margin-top: 2rem;
   gap: 1rem;
+  visibility: hidden;
 }
 
 .seats-wrapper button {
