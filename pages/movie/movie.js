@@ -42,6 +42,7 @@ export default async (movieId) => {
       "div.movie-booking > div.seats-wrapper > div.seats-container"
     );
     const button = document.querySelector(".seats-wrapper button");
+    button.addEventListener("click", handleContinue);
     button.style.visibility = "visible";
 
     const url = new URL(`${window.apiUrl}/api/bookings`);
@@ -78,6 +79,12 @@ export default async (movieId) => {
     };
 
     addSelectSeatHandler(seatsContent, button, clearSelected);
+  }
+
+  function handleContinue(event) {
+    location.href = `#/book?movieId=${movieId}&seat=${event.target.getAttribute(
+      "data-seat-number"
+    )}`;
   }
 
   function addSelectSeatHandler(seatsContent, button, clearSelected) {
