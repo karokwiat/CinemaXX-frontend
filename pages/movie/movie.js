@@ -54,9 +54,6 @@ export default async (movieId) => {
 
     const { freeSeats, bookedSeats } = await getSeatsResponse.json();
 
-    seatsContainer.style["--number-of-seats"] = Math.sqrt(
-      freeSeats.length + bookedSeats.length
-    );
     populateSeatsContainer(seatsContainer, freeSeats, bookedSeats);
   }
 
