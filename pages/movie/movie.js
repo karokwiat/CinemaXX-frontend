@@ -54,7 +54,7 @@ export default async (movieId) => {
 
     const { freeSeats, bookedSeats } = await getSeatsResponse.json();
 
-    populateSeatsContainer(freeSeats, bookedSeats);
+    populateSeatsContainer(seatsContainer, freeSeats, bookedSeats);
   }
 
   function populateSeatsContainer(seatsContainer, freeSeats, bookedSeats) {
