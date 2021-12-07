@@ -58,7 +58,7 @@ export default async (movieId) => {
   }
 
   function populateSeatsContainer(seatsContainer, freeSeats, bookedSeats) {
-    const allSeats = [...freeSeats, ...bookedSeats].sort();
+    const allSeats = sortSeats([...freeSeats, ...bookedSeats]);
 
     allSeats.forEach((seat) => {
       const seatElement = document.createElement("div");
@@ -68,7 +68,7 @@ export default async (movieId) => {
   }
 
   function sortSeats(seats) {
-    seats.sort((a, b) => {
+    return seats.sort((a, b) => {
       const aArr = a.split("-");
       const bArr = a.split("-");
 
