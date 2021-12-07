@@ -34,8 +34,13 @@ export default async (movieId) => {
     return `${t[0]} ${h[0]}:${h[1]}`;
   }
 
+  ////////////////////////////////////////////////////////////////////////
+  //                     Functions related to seats                     //
+  ////////////////////////////////////////////////////////////////////////
   async function handleTimeSlotChange(event) {
-    document.querySelector("div.movie-booking > div.seats");
+    const seatsContainer = document.querySelector(
+      "div.movie-booking > div.seats-container"
+    );
 
     const url = new URL(`${window.apiUrl}/api/bookings`);
     url.searchParams.append("theaterHall", 1);
@@ -49,6 +54,16 @@ export default async (movieId) => {
 
     const { freeSeats, bookedSeats } = await getSeatsResponse.json();
 
-    console.log(freeSeats, "________", bookedSeats);
+    populateSeatsContainer(freeSeats, bookedSeats);
+  }
+
+  function populateSeatsContainer(seatsContainer, freeSeats, bookedSeats) {
+    const allSeats = [...freeSeats, ...bookedSeats].sort();
+
+    allSeats.forEach((seat) => {
+      const seatElement = document.createElement("div");
+      seatElement.textContent = seat;
+      seatsContainer.appendChild(seatElement);
+    });
   }
 };
