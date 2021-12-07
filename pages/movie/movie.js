@@ -66,8 +66,9 @@ export default async (movieId) => {
       const seatContentElement = document.createElement("div");
       seatContentElement.classList.add("seat-content");
       seatContentElement.textContent = seat;
+
       seatContentElement.appendChild(seatElement);
-      seatsContainer.appendChild(seatElement);
+      seatsContainer.appendChild(seatContentElement);
     });
   }
 
