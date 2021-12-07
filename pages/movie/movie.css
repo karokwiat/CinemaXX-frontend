@@ -1,3 +1,4 @@
-body {
-  background-color: black;
+.seats-container {
+  display: grid;
+  grid-template-rows: repeat(var(--number-of-seats), 1fr);
 }
