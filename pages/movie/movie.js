@@ -66,4 +66,18 @@ export default async (movieId) => {
       seatsContainer.appendChild(seatElement);
     });
   }
+
+  function sortSeats(seats) {
+    seats.sort((a, b) => {
+      const aArr = a.split("-");
+      const bArr = a.split("-");
+
+      for (let i = 0, len = aArr.length; i < len; i++) {
+        if (aArr[i] === bArr[i] && i + 1 < len) {
+          continue;
+        }
+        return aArr[i] - bArr[i];
+      }
+    });
+  }
 };
