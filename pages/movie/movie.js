@@ -67,8 +67,8 @@ export default async (movieId) => {
       seatContentElement.classList.add("seat-content");
       seatContentElement.textContent = seat;
 
-      seatContentElement.appendChild(seatElement);
-      seatsContainer.appendChild(seatContentElement);
+      seatsContainer.appendChild(seatElement);
+      seatElement.appendChild(seatContentElement);
     });
   }
 
