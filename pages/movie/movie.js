@@ -57,8 +57,8 @@ export default async (movieId) => {
     clearSeats(seatsContainer);
     populateSeatsContainer(seatsContainer, freeSeats, bookedSeats);
 
-    const seatsContent = seatsContainer.querySelectorAll('.seat-content')
-    highlightFreeSeats(seatsContent., freeSeats);
+    const seatsContent = seatsContainer.querySelectorAll(".seat-content");
+    highlightFreeSeats(seatsContent, freeSeats);
     highlightBookedSeats(seatsContent, bookedSeats);
   }
 
@@ -84,7 +84,8 @@ export default async (movieId) => {
   }
 
   function highlightBookedSeats(seatsContent, bookedSeats) {
-    [...seatsContent].filter((seat) => bookedSeats.includes(seat.textContent))
+    [...seatsContent]
+      .filter((seat) => bookedSeats.includes(seat.textContent))
       .forEach((seat) => seat.classList.add("booked"));
   }
 
