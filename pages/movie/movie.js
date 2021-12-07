@@ -60,6 +60,36 @@ export default async (movieId) => {
     const seatsContent = seatsContainer.querySelectorAll(".seat-content");
     highlightFreeSeats(seatsContent, freeSeats);
     highlightBookedSeats(seatsContent, bookedSeats);
+
+    addSelectSeatHandlers(seatsContent, freeSeats);
+  }
+
+  function addSelectSeatHandler(seatsContent, freeSeats) {
+    const button = document.querySelector('.seats-wrapper button')
+    [...seatsContent].forEach((seat) => {
+      seat.addEventListener("click", (event) => {
+        const { target }= event
+        if (target.classList.contains('free')) {
+          button.disabled = false
+          button.setAttribute('data-seat-number', target.textContent)
+          target.classList.remove('free')
+          target.classList.add('selected')
+          return
+        }
+        
+        const oldSeatNumber = button.getAttribute('data-seat-number')
+
+        if (!oldSeatNumber) {
+          return
+        }
+
+        button.disabled = true
+        button.removeAttribute('data-seat-number')
+
+        const isFree = freeSeats.includes(oldSeatNumber)
+        [...seatsContent].filter((_seat) => _seat.textContent === oldSeatNumber).forEach((_seat) => isFree ? 'free' : 'booked')
+      });
+    });
   }
 
   function populateSeatsContainer(seatsContainer, freeSeats, bookedSeats) {

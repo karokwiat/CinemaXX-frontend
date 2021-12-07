@@ -25,6 +25,10 @@
 }
 
 .seats-container .seat .seat-content.free {
+  background-color: yellow;
+}
+
+.seats-container .seat .seat-content.free {
   background-color: green;
 }
 
