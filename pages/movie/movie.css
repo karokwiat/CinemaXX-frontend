@@ -36,10 +36,6 @@
   background-color: red;
 }
 
-.seats-wrapper .continue {
-  visibility: hidden;
-}
-
 .seats-wrapper .screen {
   height: 1rem;
   background-color: black;
@@ -57,7 +53,7 @@
   visibility: hidden;
 }
 
-.seats-wrapper button {
+.seats-wrapper .continue {
   width: 25%;
   height: 2rem;
 }
