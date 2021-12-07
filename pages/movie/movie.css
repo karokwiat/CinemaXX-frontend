@@ -1,5 +1,12 @@
 .seats-container {
+  margin-top: 35px;
   display: grid;
   grid-template-rows: repeat(5, 1fr);
   grid-template-columns: repeat(5, 1fr);
+}
+
+.seats-container .seat {
+}
+
+.seats-container .seat .seat-content {
 }
