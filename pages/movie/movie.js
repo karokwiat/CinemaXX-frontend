@@ -62,10 +62,11 @@ export default async (movieId) => {
 
     allSeats.forEach((seat) => {
       const seatElement = document.createElement("div");
-      seatElement.textContent = seat;
       seatElement.classList.add("seat");
       const seatContentElement = document.createElement("div");
       seatContentElement.classList.add("seat-content");
+      seatContentElement.textContent = seat;
+      seatContentElement.appendChild(seatElement);
       seatsContainer.appendChild(seatElement);
     });
   }
