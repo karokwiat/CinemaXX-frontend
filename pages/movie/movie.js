@@ -63,10 +63,10 @@ export default async (movieId) => {
     highlightFreeSeats(seatsContent, freeSeats);
     highlightBookedSeats(seatsContent, bookedSeats);
 
-    addSelectSeatHandler(seatsContent, freeSeats);
+    addSelectSeatHandler(seatsContent, button, freeSeats);
   }
 
-  function addSelectSeatHandler(seatsContent, freeSeats) {
+  function addSelectSeatHandler(seatsContent, button, freeSeats) {
     [...seatsContent].forEach((seat) => {
       seat.addEventListener("click", (event) => {
         const { target } = event;
