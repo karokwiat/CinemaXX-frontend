@@ -63,35 +63,38 @@ export default async (movieId) => {
     highlightFreeSeats(seatsContent, freeSeats);
     highlightBookedSeats(seatsContent, bookedSeats);
 
-    addSelectSeatHandler(seatsContent, button, freeSeats);
+    const clearSelected = (selected) => {
+      const isFree = freeSeats.includes(selected);
+
+      [...seatsContent]
+        .filter((_seat) => _seat.textContent === selected)
+        .forEach((_seat) => {
+          _seat.classList.remove("selected");
+          _seat.classList.add(isFree ? "free" : "booked");
+        });
+
+      button.disabled = true;
+      button.removeAttribute("data-seat-number");
+    };
+
+    addSelectSeatHandler(seatsContent, button, clearSelected);
   }
 
-  function addSelectSeatHandler(seatsContent, button, freeSeats) {
+  function addSelectSeatHandler(seatsContent, button, clearSelected) {
     [...seatsContent].forEach((seat) => {
       seat.addEventListener("click", (event) => {
         const { target } = event;
+        const selected = button.getAttribute("data-seat-number");
+        clearSelected(selected);
+
         if (target.classList.contains("free")) {
+          clearSelected(target.textContent);
           button.disabled = false;
           button.setAttribute("data-seat-number", target.textContent);
           target.classList.remove("free");
           target.classList.add("selected");
           return;
         }
-
-        const oldSeatNumber = button.getAttribute("data-seat-number");
-
-        if (!oldSeatNumber) {
-          return;
-        }
-
-        button.disabled = true;
-        button.removeAttribute("data-seat-number");
-
-        const isFree = freeSeats.includes(oldSeatNumber);
-
-        [...seatsContent]
-          .filter((_seat) => _seat.textContent === oldSeatNumber)
-          .forEach((_seat) => _seat.classList.add(isFree ? "free" : "booked"));
       });
     });
   }
