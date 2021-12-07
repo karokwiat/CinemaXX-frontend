@@ -54,7 +54,10 @@ export default async (movieId) => {
 
     const { freeSeats, bookedSeats } = await getSeatsResponse.json();
 
+    clearSeats(seatsContainer);
     populateSeatsContainer(seatsContainer, freeSeats, bookedSeats);
+    highlightFreeSeats(seatsContainer, freeSeats);
+    highlightBookedSeats(seatsContainer, bookedSeats);
   }
 
   function populateSeatsContainer(seatsContainer, freeSeats, bookedSeats) {
@@ -72,6 +75,18 @@ export default async (movieId) => {
     });
   }
 
+  function highlightFreeSeats(seatsContainer, freeSeats) {
+    [...seatsContainer.children]
+      .filter((seat) => freeSeats.includes(seat.textContent))
+      .forEach((seat) => seat.classList.add("free"));
+  }
+
+  function highlightBookedSeats(seatsContainer, bookedSeats) {
+    [...seatsContainer.children]
+      .filter((seat) => bookedSeats.includes(seat.textContent))
+      .forEach((seat) => seat.classList.add("booked"));
+  }
+
   function sortSeats(seats) {
     return seats.sort((a, b) => {
       const aN = Number(a.replaceAll("-", ""));
@@ -79,5 +94,9 @@ export default async (movieId) => {
 
       return aN - bN;
     });
+  }
+
+  function clearSeats(seatsContainer) {
+    seatsContainer.innerHTML = "";
   }
 };

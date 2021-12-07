@@ -23,3 +23,11 @@
   border-radius: 50% 50% 30% 30%;
   border-bottom: 0.5rem solid rgba(0, 0, 0, 0.75);
 }
+
+.seats-container .seat .seat-content .free {
+  background-color: green;
+}
+
+.seats-container .seat .seat-content .booked {
+  background-color: green;
+}
