@@ -29,5 +29,5 @@
 }
 
 .seats-container .seat .seat-content .booked {
-  background-color: green;
+  background-color: red;
 }
