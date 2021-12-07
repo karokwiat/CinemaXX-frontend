@@ -35,3 +35,7 @@
 .seats-container .seat .seat-content.booked {
   background-color: red;
 }
+
+.seats-wrapper .continue {
+  visibility: hidden;
+}

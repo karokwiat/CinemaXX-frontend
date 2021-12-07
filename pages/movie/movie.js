@@ -39,8 +39,10 @@ export default async (movieId) => {
   ////////////////////////////////////////////////////////////////////////
   async function handleTimeSlotChange(event) {
     const seatsContainer = document.querySelector(
-      "div.movie-booking > div.seats-container"
+      "div.movie-booking > div.seats-wrapper > div.seats-container"
     );
+    const button = document.querySelector(".seats-wrapper button");
+    button.visibility = "visible";
 
     const url = new URL(`${window.apiUrl}/api/bookings`);
     url.searchParams.append("theaterHall", 1);
@@ -65,8 +67,6 @@ export default async (movieId) => {
   }
 
   function addSelectSeatHandler(seatsContent, freeSeats) {
-    const button = document.querySelector(".seats-wrapper button");
-
     [...seatsContent].forEach((seat) => {
       seat.addEventListener("click", (event) => {
         const { target } = event;
