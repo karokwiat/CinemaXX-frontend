@@ -6,32 +6,21 @@ export default () => {
     .then((moviesHtml) => {
       content.innerHTML = moviesHtml;
 
+      const today = new Date();
+      const inAWeek = setFutureDayEnd(today, 7);
+
       const movieContainer = document.querySelector(".movie-container");
       const noMoviePrompt = document.querySelector("h4.prompt");
       noMoviePrompt.style.display = "none";
+      const filterContainer = document.querySelector(".filter");
       const todayBtn = document.querySelector("#today-btn");
-      const tomorrowBtn = document.querySelector("#tomorrow-btn");
+      todayBtn.innerHTML = `Today <br /> ${getYearMonthDay(today)}`;
       const weekBtn = document.querySelector("#week-btn");
+
+      setButtons();
 
       todayBtn.addEventListener("click", () => {
         const fromDate = new Date();
-        const toDate = setDayEnd(fromDate);
-        const url = buildUrl(fromDate, toDate);
-        fetch(url)
-          .then((response) => response.json())
-          .then((movies) => {
-            const filteredMovies = filterMoviesWithTimeSlotsCheck(
-              movies,
-              fromDate,
-              toDate
-            );
-            movieContainer.innerHTML = "";
-            renderMovies(filteredMovies);
-          });
-      });
-
-      tomorrowBtn.addEventListener("click", () => {
-        const fromDate = setDayEnd(new Date());
         const toDate = setDayEnd(fromDate);
         const url = buildUrl(fromDate, toDate);
         fetch(url)
@@ -64,8 +53,46 @@ export default () => {
           });
       });
 
-      const today = new Date();
-      const inAWeek = setFutureDayEnd(today, 7);
+      function setButtons() {
+        for (let i = 1; i < 8; i++) {
+          const day = setFutureDayEnd(today, i);
+          const dateFilterDiv = document.createElement("div");
+          filterContainer.appendChild(dateFilterDiv);
+          dateFilterDiv.classList.add("date-filter");
+          const button = document.createElement("button");
+          dateFilterDiv.appendChild(button);
+          button.classList.add("date-filter-btn");
+          if (i === 1) {
+            button.innerHTML = `Tomorrow <br /> ${getYearMonthDay(day)}`;
+          } else {
+            const dayName = day.toLocaleDateString("en-us", {
+              weekday: "long",
+            });
+            button.innerHTML = `${dayName} <br /> ${getYearMonthDay(day)}`;
+          }
+          callNextDayButton(button, i, i + 1);
+        }
+      }
+
+      function callNextDayButton(button, daysToStart, daysToEnd) {
+        button.addEventListener("click", () => {
+          const fromDate = setFutureDayEnd(new Date(), daysToStart);
+          const toDate = setFutureDayEnd(new Date(), daysToEnd);
+          const url = buildUrl(fromDate, toDate);
+          fetch(url)
+            .then((response) => response.json())
+            .then((movies) => {
+              const filteredMovies = filterMoviesWithTimeSlotsCheck(
+                movies,
+                fromDate,
+                toDate
+              );
+              movieContainer.innerHTML = "";
+              renderMovies(filteredMovies);
+            });
+        });
+      }
+
       const url = buildUrl(today, inAWeek);
 
       return fetch(url)
@@ -144,8 +171,8 @@ export default () => {
     });
 
   function buildUrl(fromDate, toDate) {
-    const startDate = formatDateForRequest(fromDate);
-    const endDate = formatDateForRequest(toDate);
+    const startDate = getYearMonthDay(fromDate);
+    const endDate = getYearMonthDay(toDate);
     console.log(startDate, endDate);
     return `${window.apiUrl}/api/movie?startRange=${startDate}&endRange=${endDate}`;
   }
@@ -169,7 +196,7 @@ export default () => {
     return d;
   }
 
-  function formatDateForRequest(date) {
+  function getYearMonthDay(date) {
     let d = new Date(date),
       month = "" + (d.getMonth() + 1),
       day = "" + d.getDate(),

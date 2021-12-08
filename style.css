@@ -93,16 +93,26 @@ section {
 .filter {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .date-filter-btn {
   font: inherit;
-  background-color: #4e7bcf;
+  background-color: #3a3a3a;
   color: white;
   padding: 16px;
   margin: 5px;
   font-size: 16px;
-  border: none;
+  border: 1px solid white;
+}
+
+#week-btn {
+  padding-left: 36px;
+  padding-right: 36px;
+}
+
+.date-filter-btn:focus {
+  background-color: #4e7bcf;
 }
 
 .date-filter {
