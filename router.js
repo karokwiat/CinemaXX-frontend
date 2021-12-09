@@ -24,12 +24,15 @@ export default function () {
       movies: () => {
         renderMovies().then(router.updatePageLinks);
       },
-      "/movie/:id/": ({ data, params }) => {
+      "/movie/:id/": ({ data }) => {
         renderMovie(data.id);
       },
       "/movie/:id/booking": ({ data }) => {
         renderBooking(data.id);
       },
+      "/movie/:id/booking": ({ data, params }) => {
+        renderBooking({data, params});
+      }
     })
     .resolve();
 }

@@ -7,7 +7,7 @@ export default async (movieId) => {
 
   const getMovieResponse = await fetch(`${window.apiUrl}/api/movie/${movieId}`);
   const movie = await getMovieResponse.json();
-  console.log(movie);
+  //console.log(movie);
   document.querySelector(".movie-poster img").src = movie.poster;
   document.querySelector("h3.title").innerText = movie.title;
   document.querySelector("p.description").innerHTML = movie.description;
@@ -19,6 +19,12 @@ export default async (movieId) => {
 
   const timeSlotsList = document.querySelector(".dropdown-content");
   timeSlotsList.addEventListener("change", handleTimeSlotChange);
+
+  // create default empty option
+  const timeSlotDefault = document.createElement("option");
+  timeSlotDefault.value = "";
+  timeSlotDefault.textContent = "Select Day and Time";
+  timeSlotsList.appendChild(timeSlotDefault);
 
   movie.timeSlots.forEach((timeSlot) => {
     const timeSlotItem = document.createElement("option");
@@ -42,52 +48,57 @@ export default async (movieId) => {
       "div.movie-booking > div.seats-wrapper"
     );
 
-    const seatsContainer = document.querySelector(
-      "div.movie-booking > div.seats-wrapper > div.seats-container"
-    );
-    const button = document.querySelector(".seats-wrapper button");
-    button.addEventListener("click", handleContinue);
+    if(event.target.value == "")
+      seatsWrapper.style.visibility = "hidden";
+    else {
 
-    const url = new URL(`${window.apiUrl}/api/bookings`);
-    url.searchParams.append("theaterHall", 1);
-    url.searchParams.append("startTime", event.target.value.replace("T", " "));
+      const seatsContainer = document.querySelector(
+        "div.movie-booking > div.seats-wrapper > div.seats-container"
+      );
+      const button = document.querySelector(".seats-wrapper button");
+      button.addEventListener("click", handleContinue);
 
-    const getSeatsResponse = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("user")}`,
-      },
-    });
+      const url = new URL(`${window.apiUrl}/api/bookings`);
+      url.searchParams.append("theaterHall", 1);
+      url.searchParams.append("startTime", event.target.value.replace("T", " "));
 
-    const { freeSeats, bookedSeats } = await getSeatsResponse.json();
+      const getSeatsResponse = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user")}`,
+        },
+      });
 
-    clearSeats(seatsContainer);
-    populateSeatsContainer(seatsContainer, freeSeats, bookedSeats);
+      const { freeSeats, bookedSeats } = await getSeatsResponse.json();
 
-    const seatsContent = seatsContainer.querySelectorAll(".seat-content");
-    highlightFreeSeats(seatsContent, freeSeats);
-    highlightBookedSeats(seatsContent, bookedSeats);
+      clearSeats(seatsContainer);
+      populateSeatsContainer(seatsContainer, freeSeats, bookedSeats);
 
-    const clearSelected = (selected) => {
-      const isFree = freeSeats.includes(selected);
+      const seatsContent = seatsContainer.querySelectorAll(".seat-content");
+      highlightFreeSeats(seatsContent, freeSeats);
+      highlightBookedSeats(seatsContent, bookedSeats);
 
-      [...seatsContent]
-        .filter((_seat) => _seat.textContent === selected)
-        .forEach((_seat) => {
-          _seat.classList.remove("selected");
-          _seat.classList.add(isFree ? "free" : "booked");
-        });
+      const clearSelected = (selected) => {
+        const isFree = freeSeats.includes(selected);
 
-      button.disabled = true;
-      button.removeAttribute("data-seat-number");
-    };
+        [...seatsContent]
+          .filter((_seat) => _seat.textContent === selected)
+          .forEach((_seat) => {
+            _seat.classList.remove("selected");
+            _seat.classList.add(isFree ? "free" : "booked");
+          });
 
-    addSelectSeatHandler(seatsContent, button, clearSelected);
+        button.disabled = true;
+        button.removeAttribute("data-seat-number");
+      };
 
-    seatsWrapper.style.visibility = "visible";
+      addSelectSeatHandler(seatsContent, button, clearSelected);
+
+      seatsWrapper.style.visibility = "visible";
+    }
   }
 
   function handleContinue(event) {
-    location.href = `#/book?movieId=${movieId}&seat=${event.target.getAttribute(
+    location.href = `#/movie/${movieId}/booking?&seat=${event.target.getAttribute(
       "data-seat-number"
     )}`;
   }

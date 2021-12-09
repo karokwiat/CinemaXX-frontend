@@ -14,7 +14,7 @@ export default () => {
       return fetch(url)
         .then((response) => response.json())
         .then((movies) => {
-          console.log(movies);
+          //console.log(movies);
           movies
             .filter((movie, idx) => idx < 5)
             .forEach((movie) => {
@@ -49,7 +49,7 @@ export default () => {
   function buildUrl(fromDate, toDate) {
     const startDate = formatDateForRequest(fromDate);
     const endDate = formatDateForRequest(toDate);
-    console.log(startDate, endDate);
+    //console.log(startDate, endDate);
     return `${window.apiUrl}/api/movie?startRange=${startDate}&endRange=${endDate}`;
   }
 

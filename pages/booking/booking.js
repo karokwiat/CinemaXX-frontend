@@ -1,9 +1,7 @@
-export default () => {
+export default async () => {
   const content = document.querySelector(".content");
 
-  fetch("./pages/booking/booking.html")
-    .then((response) => response.text())
-    .then((aboutHtml) => {
-      content.innerHTML = bookingHtml;
-    });
+  const bookingPageResponse = await fetch("./pages/booking/booking.html");
+  const bookingHtml = await bookingPageResponse.text();
+  content.innerHTML = bookingHtml;
 };
