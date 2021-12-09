@@ -89,6 +89,7 @@ export default async (movieId) => {
 
         button.disabled = true;
         button.removeAttribute("data-seat-number");
+        button.setAttribute("time-slot", event.target.value);
       };
 
       addSelectSeatHandler(seatsContent, button, clearSelected);
@@ -100,6 +101,8 @@ export default async (movieId) => {
   function handleContinue(event) {
     location.href = `#/movie/${movieId}/booking?&seat=${event.target.getAttribute(
       "data-seat-number"
+    )}&timeSlot=${event.target.getAttribute(
+      "time-slot"
     )}`;
   }
 
