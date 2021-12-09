@@ -6,7 +6,7 @@ import renderMovies from "./pages/movies/movies.js";
 import renderBooking from "./pages/booking/booking.js";
 
 export default function () {
-  const router = new Navigo("/", { hash: true });
+  window.router = new Navigo("/", { hash: true });
 
   router
     .on({
@@ -27,11 +27,8 @@ export default function () {
       "/movie/:id/": ({ data }) => {
         renderMovie(data.id);
       },
-      "/movie/:id/booking": ({ data }) => {
-        renderBooking(data.id);
-      },
       "/movie/:id/booking": ({ data, params }) => {
-        renderBooking({data, params});
+        renderBooking({ data, params });
       }
     })
     .resolve();

@@ -7,7 +7,7 @@ export default async (movieId) => {
 
   const getMovieResponse = await fetch(`${window.apiUrl}/api/movie/${movieId}`);
   const movie = await getMovieResponse.json();
-  //console.log(movie);
+  console.log(movie);
   document.querySelector(".movie-poster img").src = movie.poster;
   document.querySelector("h3.title").innerText = movie.title;
   document.querySelector("p.description").innerHTML = movie.description;
@@ -89,7 +89,7 @@ export default async (movieId) => {
 
         button.disabled = true;
         button.removeAttribute("data-seat-number");
-        button.setAttribute("time-slot", event.target.value);
+        button.setAttribute("data-time-slot", event.target.value);
       };
 
       addSelectSeatHandler(seatsContent, button, clearSelected);
@@ -99,11 +99,11 @@ export default async (movieId) => {
   }
 
   function handleContinue(event) {
-    location.href = `#/movie/${movieId}/booking?&seat=${event.target.getAttribute(
+    window.router.navigate(`#/movie/${movieId}/booking?&seat=${event.target.getAttribute(
       "data-seat-number"
     )}&timeSlot=${event.target.getAttribute(
-      "time-slot"
-    )}`;
+      "data-time-slot"
+    )}`);
   }
 
   function addSelectSeatHandler(seatsContent, button, clearSelected) {

@@ -9,7 +9,7 @@ export default async (booking) => {
 
   const bodyData = {
     seatId: booking.params.seat,
-    timeSlotId: booking.params.timeSlot.replace("T", " "),
+    timeSlotId: booking.params.timeSlot,
     movieId: booking.data.id,
     theaterHallId: 1
   };
