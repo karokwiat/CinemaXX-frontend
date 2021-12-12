@@ -7,7 +7,7 @@ export default async (movieId) => {
 
   const getMovieResponse = await fetch(`${window.apiUrl}/api/movie/${movieId}`);
   const movie = await getMovieResponse.json();
-  console.log(movie);
+  //console.log(movie);
   document.querySelector(".movie-poster img").src = movie.poster;
   document.querySelector("h3.title").innerText = movie.title;
   document.querySelector("p.description").innerHTML = movie.description;
@@ -29,7 +29,7 @@ export default async (movieId) => {
   movie.timeSlots.forEach((timeSlot) => {
     const timeSlotItem = document.createElement("option");
 
-    timeSlotItem.value = timeSlot.scheduledTime;
+    timeSlotItem.value = timeSlot.timeSlotId;
     timeSlotItem.textContent = getTimeForCustomer(timeSlot.scheduledTime);
     timeSlotsList.appendChild(timeSlotItem);
   });
@@ -58,14 +58,23 @@ export default async (movieId) => {
       const button = document.querySelector(".seats-wrapper button");
       button.addEventListener("click", handleContinue);
 
-      const url = new URL(`${window.apiUrl}/api/bookings`);
-      url.searchParams.append("theaterHall", 1);
-      url.searchParams.append("startTime", event.target.value.replace("T", " "));
+      const requestHeader = {
+        Authorization: `Bearer ${localStorage.getItem("user")}`,
+      };
 
-      const getSeatsResponse = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("user")}`,
-        },
+      const tUrl = new URL(`${window.apiUrl}/api/theater?movieId=${movieId}&timeSlotId=${event.target.value}`);
+      // get the theaterHall based on the movie and timeSlot
+      const getTheaterHallResponse = await fetch(tUrl, {
+        headers : requestHeader,
+      });
+      const theaterHall = await getTheaterHallResponse.json();
+
+      const bUrl = new URL(`${window.apiUrl}/api/bookings`);
+      bUrl.searchParams.append("theaterHall", theaterHall.theaterHallId);
+      bUrl.searchParams.append("startTime", event.target.options[event.target.selectedIndex].text+":00");
+
+      const getSeatsResponse = await fetch(bUrl, {
+        headers: requestHeader,
       });
 
       const { freeSeats, bookedSeats } = await getSeatsResponse.json();
@@ -78,7 +87,7 @@ export default async (movieId) => {
       highlightBookedSeats(seatsContent, bookedSeats);
 
       const clearSelected = (selected) => {
-        const isFree = freeSeats.includes(selected);
+        const isFree = freeSeats.some(freeSeat => freeSeat.seatNumber === selected);
 
         [...seatsContent]
           .filter((_seat) => _seat.textContent === selected)
@@ -133,7 +142,7 @@ export default async (movieId) => {
       seatElement.classList.add("seat");
       const seatContentElement = document.createElement("div");
       seatContentElement.classList.add("seat-content");
-      seatContentElement.textContent = seat;
+      seatContentElement.textContent = seat.seatNumber;
 
       seatsContainer.appendChild(seatElement);
       seatElement.appendChild(seatContentElement);
@@ -142,20 +151,20 @@ export default async (movieId) => {
 
   function highlightFreeSeats(seatsContent, freeSeats) {
     [...seatsContent]
-      .filter((seat) => freeSeats.includes(seat.textContent))
+      .filter((seat) => freeSeats.some(freeSeat => freeSeat.seatNumber === seat.textContent))
       .forEach((seat) => seat.classList.add("free"));
   }
 
   function highlightBookedSeats(seatsContent, bookedSeats) {
     [...seatsContent]
-      .filter((seat) => bookedSeats.includes(seat.textContent))
+      .filter((seat) => bookedSeats.some(bookedSeat => bookedSeat.seatNumber === seat.textContent))
       .forEach((seat) => seat.classList.add("booked"));
   }
 
   function sortSeats(seats) {
     return seats.sort((a, b) => {
-      const aN = Number(a.replaceAll("-", ""));
-      const bN = Number(b.replaceAll("-", ""));
+      const aN = Number(a.seatNumber.replaceAll("-", ""));
+      const bN = Number(b.seatNumber.replaceAll("-", ""));
 
       return aN - bN;
     });
