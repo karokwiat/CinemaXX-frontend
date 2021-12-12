@@ -148,7 +148,9 @@ export default () => {
           articleContent.appendChild(movieTitle);
           const movieTitleLink = document.createElement("a");
           movieTitle.appendChild(movieTitleLink);
-          movieTitleLink.href = `/#/movie/${movie.movieId}`;
+          movieTitleLink.addEventListener("click", () =>
+            window.location.replace(`/#/movie/${movie.movieId}`)
+          );
           movieTitleLink.innerHTML = movie.title;
           movie.timeSlots
             .filter((timesSlot, idx) => idx < 2)
@@ -164,7 +166,9 @@ export default () => {
             articleContent.appendChild(showMore);
             showMore.innerText = "Show more times";
             showMore.classList.add("more");
-            showMore.href = `/#/movie/${movie.movieId}`;
+            showMore.addEventListener("click", () =>
+              window.location.replace(`/#/movie/${movie.movieId}`)
+            );
           }
         });
       }

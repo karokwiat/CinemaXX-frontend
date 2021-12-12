@@ -13,9 +13,8 @@ export default async (movieId) => {
   document.querySelector("p.description").innerHTML = movie.description;
   document.querySelector("p.ageRestriction").innerHTML = movie.ageRestriction;
   document.querySelector("p.rating").innerHTML = movie.rating;
-  // document.querySelector("span").innerHTML = getTimeForCustomer(
-  //   movie.timeSlots[0].scheduledTime
-  // );
+
+  const today = new Date();
 
   const timeSlotsList = document.querySelector(".dropdown-content");
   timeSlotsList.addEventListener("change", handleTimeSlotChange);
@@ -26,7 +25,12 @@ export default async (movieId) => {
   timeSlotDefault.textContent = "Select Day and Time";
   timeSlotsList.appendChild(timeSlotDefault);
 
-  movie.timeSlots.forEach((timeSlot) => {
+  const filteredTimeSlots = movie.timeSlots.filter((timeSlot) => {
+    const dateToCheck = formatDatetimeToJavascriptDate(timeSlot.scheduledTime);
+    return checkIfDateIsBigger(dateToCheck, today);
+  });
+  console.log(filteredTimeSlots);
+  filteredTimeSlots.forEach((timeSlot) => {
     const timeSlotItem = document.createElement("option");
 
     timeSlotItem.value = timeSlot.timeSlotId;
@@ -40,6 +44,16 @@ export default async (movieId) => {
     return `${t[0]} ${h[0]}:${h[1]}`;
   }
 
+  function formatDatetimeToJavascriptDate(datetime) {
+    const t = datetime.split(/[- :T]/);
+    const d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
+    return d;
+  }
+
+  function checkIfDateIsBigger(check, fromDate) {
+    return check.getTime() >= fromDate.getTime();
+  }
+
   ////////////////////////////////////////////////////////////////////////
   //                     Functions related to seats                     //
   ////////////////////////////////////////////////////////////////////////
@@ -48,10 +62,8 @@ export default async (movieId) => {
       "div.movie-booking > div.seats-wrapper"
     );
 
-    if(event.target.value == "")
-      seatsWrapper.style.visibility = "hidden";
+    if (event.target.value == "") seatsWrapper.style.visibility = "hidden";
     else {
-
       const seatsContainer = document.querySelector(
         "div.movie-booking > div.seats-wrapper > div.seats-container"
       );
@@ -62,16 +74,21 @@ export default async (movieId) => {
         Authorization: `Bearer ${localStorage.getItem("user")}`,
       };
 
-      const tUrl = new URL(`${window.apiUrl}/api/theater?movieId=${movieId}&timeSlotId=${event.target.value}`);
+      const tUrl = new URL(
+        `${window.apiUrl}/api/theater?movieId=${movieId}&timeSlotId=${event.target.value}`
+      );
       // get the theaterHall based on the movie and timeSlot
       const getTheaterHallResponse = await fetch(tUrl, {
-        headers : requestHeader,
+        headers: requestHeader,
       });
       const theaterHall = await getTheaterHallResponse.json();
 
       const bUrl = new URL(`${window.apiUrl}/api/bookings`);
       bUrl.searchParams.append("theaterHall", theaterHall.theaterHallId);
-      bUrl.searchParams.append("startTime", event.target.options[event.target.selectedIndex].text+":00");
+      bUrl.searchParams.append(
+        "startTime",
+        event.target.options[event.target.selectedIndex].text + ":00"
+      );
 
       const getSeatsResponse = await fetch(bUrl, {
         headers: requestHeader,
@@ -87,7 +104,9 @@ export default async (movieId) => {
       highlightBookedSeats(seatsContent, bookedSeats);
 
       const clearSelected = (selected) => {
-        const isFree = freeSeats.some(freeSeat => freeSeat.seatNumber === selected);
+        const isFree = freeSeats.some(
+          (freeSeat) => freeSeat.seatNumber === selected
+        );
 
         [...seatsContent]
           .filter((_seat) => _seat.textContent === selected)
@@ -103,9 +122,17 @@ export default async (movieId) => {
         button.removeAttribute("data-theater-hall");
       };
 
-      const buttonAttributes = {timeSlot:event.target.value, theaterHall:theaterHall.theaterHallId};
+      const buttonAttributes = {
+        timeSlot: event.target.value,
+        theaterHall: theaterHall.theaterHallId,
+      };
 
-      addSelectSeatHandler(seatsContent, button, clearSelected, buttonAttributes);
+      addSelectSeatHandler(
+        seatsContent,
+        button,
+        clearSelected,
+        buttonAttributes
+      );
       clearSelected();
 
       seatsWrapper.style.visibility = "visible";
@@ -113,16 +140,21 @@ export default async (movieId) => {
   }
 
   function handleContinue(event) {
-    window.router.navigate(`#/movie/${movieId}/booking?&seatId=${event.target.getAttribute(
-      "data-seat"
-    )}&timeSlotId=${event.target.getAttribute(
-      "data-time-slot"
-    )}&theaterHallId=${event.target.getAttribute(
-      "data-theater-hall"
-    )}`);
+    window.router.navigate(
+      `#/movie/${movieId}/booking?&seatId=${event.target.getAttribute(
+        "data-seat"
+      )}&timeSlotId=${event.target.getAttribute(
+        "data-time-slot"
+      )}&theaterHallId=${event.target.getAttribute("data-theater-hall")}`
+    );
   }
 
-  function addSelectSeatHandler(seatsContent, button, clearSelected, attributes) {
+  function addSelectSeatHandler(
+    seatsContent,
+    button,
+    clearSelected,
+    attributes
+  ) {
     [...seatsContent].forEach((seat) => {
       seat.addEventListener("click", (event) => {
         const { target } = event;
@@ -162,13 +194,19 @@ export default async (movieId) => {
 
   function highlightFreeSeats(seatsContent, freeSeats) {
     [...seatsContent]
-      .filter((seat) => freeSeats.some(freeSeat => freeSeat.seatNumber === seat.textContent))
+      .filter((seat) =>
+        freeSeats.some((freeSeat) => freeSeat.seatNumber === seat.textContent)
+      )
       .forEach((seat) => seat.classList.add("free"));
   }
 
   function highlightBookedSeats(seatsContent, bookedSeats) {
     [...seatsContent]
-      .filter((seat) => bookedSeats.some(bookedSeat => bookedSeat.seatNumber === seat.textContent))
+      .filter((seat) =>
+        bookedSeats.some(
+          (bookedSeat) => bookedSeat.seatNumber === seat.textContent
+        )
+      )
       .forEach((seat) => seat.classList.add("booked"));
   }
 

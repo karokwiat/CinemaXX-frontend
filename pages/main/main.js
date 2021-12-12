@@ -16,7 +16,7 @@ export default () => {
         .then((movies) => {
           //console.log(movies);
           movies
-            .filter((movie, idx) => idx < 5)
+            .filter((movie, idx) => idx < 6)
             .forEach((movie) => {
               const posterSlideImg = document.createElement("img");
               posterSlide.appendChild(posterSlideImg);
