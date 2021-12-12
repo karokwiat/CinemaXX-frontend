@@ -11,7 +11,6 @@ export default () => {
         // Make sure the form is not submitted
         event.preventDefault();
         // endpoint for logging in
-
         const apiUrl = `${window.apiUrl}/api/authenticate/login`;
 
         fetch(apiUrl, {
@@ -28,7 +27,7 @@ export default () => {
           .then((response) => {
             if (response.token) {
               // Saving the JWT to local storage
-              localStorage.setItem("user", JSON.stringify(response.token));
+              localStorage.setItem("user", response.token);
               location.href = "/";
             }
           });

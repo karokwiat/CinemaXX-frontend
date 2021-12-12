@@ -69,11 +69,17 @@ h2 {
   text-transform: uppercase;
 }
 
+h4 {
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+
 .container {
   padding-left: 30px;
   padding-right: 30px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 40px;
 }
 
 section {
@@ -84,19 +90,33 @@ section {
   text-align: center;
 }
 
+.about {
+  margin-top: 50px;
+}
+
 .filter {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .date-filter-btn {
   font: inherit;
-  background-color: #4e7bcf;
+  background-color: #3a3a3a;
   color: white;
   padding: 16px;
   margin: 5px;
   font-size: 16px;
-  border: none;
+  border: 1px solid white;
+}
+
+#week-btn {
+  padding-left: 36px;
+  padding-right: 36px;
+}
+
+.date-filter-btn:focus {
+  background-color: #4e7bcf;
 }
 
 .date-filter {
@@ -174,10 +194,6 @@ p {
   color: #94b2eb;
 }
 
-h4 {
-  text-align: center;
-}
-
 .more {
   font: inherit;
   color: white;
@@ -187,4 +203,97 @@ h4 {
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.row {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 50px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.label {
+  font-weight: bolder;
+}
+
+.movie-info {
+  border: 1px solid white;
+  padding: 40px;
+}
+
+.title {
+  color: white;
+}
+
+p.description {
+  color: #cccccc;
+}
+
+.movie-poster img {
+  max-width: 350px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  border: 1px solid white;
+  padding: 10px;
+}
+
+span {
+  color: white;
+}
+
+.dropdown-content {
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #3a3a3a;
+}
+
+.dropdown-content a:hover {
+  color: #4e7bcf;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.poster-slide {
+  --slice-n: 6;
+
+  width: 100%;
+  height: 500px;
+  max-height: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.poster-slide img {
+  object-fit: cover;
+  width: calc(100% / var(--slice-n));
+  height: 100%;
+  transition: width 1s;
+}
+
+.poster-slide.hovered img {
+  width: calc(calc(100% - 35%) / calc(var(--slice-n) - 1));
+}
+
+.poster-slide img:hover {
+  width: calc(35%);
+  cursor: pointer;
+}
+
+.contact {
+  margin-top: 60px;
 }
