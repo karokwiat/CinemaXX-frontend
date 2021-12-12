@@ -28,5 +28,5 @@ export default async (booking) => {
   if(createBookingResponse.status===400)
     resultElement.innerHTML = "<h4>Something went wrong, please try again later</h4>"
   else
-    resultElement.innerHTML = `<h4>Seat ${createBookingResponse.seatNumber} booked succesfully for time ${createBookingResponse.scheduledTime}<h4>`
+    resultElement.innerHTML = `<h4>Seat ${createBookingResponse.seatNumber} booked succesfully for date/time ${createBookingResponse.scheduledTime.replace("T", " ")}<h4>`
 };
