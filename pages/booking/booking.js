@@ -8,10 +8,10 @@ export default async (booking) => {
   const url = new URL(`${window.apiUrl}/api/bookings`);
 
   const bodyData = {
-    seatId: booking.params.seat,
-    timeSlotId: booking.params.timeSlot,
+    seatId: booking.params.seatId,
+    timeSlotId: booking.params.timeSlotId,
     movieId: booking.data.id,
-    theaterHallId: 1
+    theaterHallId: booking.params.theaterHallId
   };
 
   const getSeatsResponse = await fetch(url, {
@@ -24,5 +24,9 @@ export default async (booking) => {
   });
 
   const createBookingResponse = await getSeatsResponse.json();
-  console.log(createBookingResponse);
+  const resultElement = document.querySelector(".bookingResult");
+  if(createBookingResponse.status===400)
+    resultElement.innerHTML = "<h4>Something went wrong, please try again later</h4>"
+  else
+    resultElement.innerHTML = `<h4>Seat ${createBookingResponse.seatNumber} booked succesfully for time ${createBookingResponse.scheduledTime}<h4>`
 };

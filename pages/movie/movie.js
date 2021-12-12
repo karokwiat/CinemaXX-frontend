@@ -98,24 +98,31 @@ export default async (movieId) => {
 
         button.disabled = true;
         button.removeAttribute("data-seat-number");
-        button.setAttribute("data-time-slot", event.target.value);
+        button.removeAttribute("data-seat");
+        button.removeAttribute("data-time-slot");
+        button.removeAttribute("data-theater-hall");
       };
 
-      addSelectSeatHandler(seatsContent, button, clearSelected);
+      const buttonAttributes = {timeSlot:event.target.value, theaterHall:theaterHall.theaterHallId};
+
+      addSelectSeatHandler(seatsContent, button, clearSelected, buttonAttributes);
+      clearSelected();
 
       seatsWrapper.style.visibility = "visible";
     }
   }
 
   function handleContinue(event) {
-    window.router.navigate(`#/movie/${movieId}/booking?&seat=${event.target.getAttribute(
-      "data-seat-number"
-    )}&timeSlot=${event.target.getAttribute(
+    window.router.navigate(`#/movie/${movieId}/booking?&seatId=${event.target.getAttribute(
+      "data-seat"
+    )}&timeSlotId=${event.target.getAttribute(
       "data-time-slot"
+    )}&theaterHallId=${event.target.getAttribute(
+      "data-theater-hall"
     )}`);
   }
 
-  function addSelectSeatHandler(seatsContent, button, clearSelected) {
+  function addSelectSeatHandler(seatsContent, button, clearSelected, attributes) {
     [...seatsContent].forEach((seat) => {
       seat.addEventListener("click", (event) => {
         const { target } = event;
@@ -126,6 +133,9 @@ export default async (movieId) => {
           clearSelected(target.textContent);
           button.disabled = false;
           button.setAttribute("data-seat-number", target.textContent);
+          button.setAttribute("data-seat", target.getAttribute("data-seat"));
+          button.setAttribute("data-time-slot", attributes.timeSlot);
+          button.setAttribute("data-theater-hall", attributes.theaterHall);
           target.classList.remove("free");
           target.classList.add("selected");
           return;
@@ -143,6 +153,7 @@ export default async (movieId) => {
       const seatContentElement = document.createElement("div");
       seatContentElement.classList.add("seat-content");
       seatContentElement.textContent = seat.seatNumber;
+      seatContentElement.setAttribute("data-seat", seat.seatId);
 
       seatsContainer.appendChild(seatElement);
       seatElement.appendChild(seatContentElement);
