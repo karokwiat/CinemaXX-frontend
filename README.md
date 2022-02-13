@@ -1,6 +1,8 @@
 # CinemaXX-frontend
 
-hosted: http://52.90.82.222:5500/
+KEA - AP Computer Science\
+Third Semester\
 
-video1: https://www.youtube.com/watch?v=EpYQwB8W3uw
-video2: https://youtu.be/PSMyXxcutUg
+**Authors:**
+
+Andre Jeronimo Camargo Bittencourt | Juan Ignacio Nicolai | Karolina Barbara Kwiatkowska | Snorri Sigurjonsson | Veselin Plamenov Ivanov
