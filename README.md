@@ -1,7 +1,7 @@
 # CinemaXX-frontend
 
 KEA - AP Computer Science\
-Third Semester\
+Third Semester
 
 **Authors:**
 
